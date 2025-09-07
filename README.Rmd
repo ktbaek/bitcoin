@@ -1,0 +1,357 @@
+---
+title: "Exploration of Bitcoin price patterns"
+author: "Kristoffer T. Bæk"
+date: "2025-09-03"
+output:
+  rmarkdown::github_document:
+    math_method: "webtex"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  dev = "png",
+  dpi = 300,
+  cache = FALSE
+  )
+library(tidyverse)
+library(magrittr)
+library(lubridate)
+library(patchwork)
+library(zoo)
+```
+
+```{r style, include=FALSE}
+source("code/theme_pub.r")
+
+theme_set(theme_pub())
+
+colors_2 <- c("#E69F00", "#56B4E9")
+```
+
+```{r functions, include=FALSE}
+source("code/geom_hpline.r")
+```
+
+## Summary
+
+Dollar cost averaging (DCA) is a strategy for buying cryptocurrency where you buy for a fixed amount of fiat at predetermined time intervals e.g $10 every Tuesday. I used a Bitcoin price index dataset (2011 - now) to explore if there are any times of the day, the week, or the month where it would be beneficial to buy. In other words, are there any consistent daily, weekly or monthly patterns in the price of Bitcoin. I didn't find any strong patterns. Probably the strongest, albeit still weak, is that the price tends to be lower towards the end of a month. I did not perform any statistical analyses, as I didn't deem the patterns worthy of any further investigations.
+
+## Methods
+
+### Data
+
+The hourly bitcoin price index data was downloaded from [Kaggle](https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data) on 28 Aug 2025.
+
+The raw data look like this:
+```{r read data, echo=TRUE}
+btc_index <- read_csv("data/BTCUSD_1h_Combined_Index.csv") 
+
+tail(btc_index)
+```
+
+I used the 'Close' price value for all analyses. 
+
+```{r tidy data}
+btc_index %<>% 
+  rename(time = `Open time`,
+         close = Close) %>% 
+  select(time, close)
+```
+
+I checked the time series for continuity, and only the first and last day contains less than 24 data points so all seems good. 
+
+```{r check data, include=FALSE }
+btc_index %>% 
+  group_by(date(time)) %>% 
+  count() %>% 
+  filter(n != 24)
+```
+
+### Calculating relative deviations
+
+I calculated rolling means with window sizes of 24 hours, 7 days and 30 days. Then I calculated the hourly deviations from those averages as absolute and relative values.  
+
+```{r calculate-deviations, echo=TRUE}
+btc_index_deviations <- btc_index %>% 
+  mutate(
+    rollavg_1 = zoo::rollmean(close, k = 24, fill = NA, align = "center"),
+    rollavg_7 = zoo::rollmean(close, k = 168, fill = NA, align = "center"),
+    rollavg_30 = zoo::rollmean(close, k = 720, fill = NA, align = "center")
+  ) %>% 
+  pivot_longer(c(-time, -close), names_to = "length", values_to = "rollavg", names_prefix = "rollavg_") %>% 
+  mutate(
+    length = as.integer(length),
+    diff = close - rollavg,
+    rel_diff = diff / rollavg
+  )
+```
+
+An example of the resulting data frame:
+```{r show-deviations, echo=TRUE}
+btc_index_deviations %>% filter(year(time) > 2011) %>% arrange(time)
+```
+
+
+
+## Results
+
+### Overview of the time series
+
+I just wanted to get an idea of the data and plotted three different time periods.
+
+```{r Figure-1, fig.asp=1, layout="l-screen", fig.cap = "**Figure 1: BTC rate over time**. Shown for three different time periods. "}
+
+# general plot
+p1 <- btc_index %>%
+  ggplot() +
+  geom_line(aes(time, close), color = colors_2[2], size = 0.3) +
+  scale_x_datetime(breaks = scales::breaks_width("2 years"),
+                   labels = scales::label_date("%Y")) +
+  labs(title = "2011 - now", x = "Time", y = "USD") 
+
+p2 <- btc_index %>%
+  filter(year(time) < 2017) %>% 
+  ggplot() +
+  geom_line(aes(time, close), color = colors_2[2], size = 0.3) +
+  scale_x_datetime() +
+  labs(title = "2011 - 2016", x = "Time", y = "USD") 
+
+p3 <- btc_index %>%
+  filter(year(time) < 2013) %>% 
+  ggplot() +
+  geom_line(aes(time, close), color = colors_2[2], size = 0.3) +
+  scale_x_datetime(labels = scales::label_date_short()) +
+  labs(title = "2011 - 2012", x = "Time", y = "USD") 
+
+p1 / p2 / p3 + plot_layout(axis_titles = "collect") & theme(legend.position = "none")
+```
+
+### Deviations from the average
+
+I calculated the rolling means as described above. They look like this:
+
+```{r Figure-2, fig.asp=0.5, layout="l-screen", fig.cap = "**Figure 2: BTC rate and rolling means.** Hourly prices and rolling means with window sizes of 1, 7, and 30 days, respectively. For illustration, only a few months of 2025 is shown. "}
+btc_index_deviations %>% 
+  filter(
+    year(time) == 2025,
+    month(time) > 4
+  ) %>% 
+  pivot_longer(c(close, rollavg), names_to = "type") %>% 
+  ggplot() +
+  geom_line(aes(time, value, color = type, size = type)) +
+  scale_x_datetime(breaks = scales::breaks_width("2 months"),
+                   labels = scales::label_date_short()) +
+  scale_y_continuous(labels = scales::label_number()) +
+  scale_color_manual(name = "", values = c(colors_2[2], "black"), labels = c("Hourly values", "Rolling mean")) +
+  scale_size_manual(guide = FALSE, values = c(0.2, 0.4)) +
+  labs(title = "", x = "Time", y = "USD") +
+  facet_wrap(vars(length)) +
+  theme(
+    legend.position = "top"
+  )
+```
+
+Then I calculated the relative deviation from those rolling means, and used them for the rest of the analyses. For all further analyses, I looked at the ten year period from 2014 to 2023. The deviations from the means look like this: 
+
+```{r Figure-3, fig.asp=0.5, layout="l-screen", fig.cap = "**Figure 3: Deviations from rolling means**. Hourly deviations from rolling means with window sizes of 1, 7, and 30 days, respectively."}
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024
+  ) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_line(aes(time, rel_diff * 100), size = 0.2) +
+  scale_x_datetime(breaks = scales::breaks_width("2 years"),
+               labels = scales::label_date("%Y")) +
+  labs(title = "", x = "Time", y = "Relative deviation (%)") +
+  facet_wrap(vars(length)) 
+```
+
+First I wanted to see if there's any hour of the day where the BTC price tends to be higher or lower. So I used the relative deviation from the 24-hour rolling mean. I removed outliers, both to the make the plots easier to interpret and to prevent a few outliers from skewing the results. The data points I removed had values outside the -10% to + 10% range (35 data points, 0.04% of the data). As seen in the plot below, there's basically no pattern. 
+
+```{r Figure-4,  fig.cap="**Figure 4: Deviations from 24-hour rolling mean**. Hourly deviations from rolling mean with window sizes of 24 hours. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.1,
+    rel_diff > -0.1,
+    length == 1) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(hour(time), rel_diff * 100), alpha = 0.3, color = "gray70", stroke = 0, position = position_jitter(width = 0.2)) +
+  geom_hpline(aes(hour(time), rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(hour(time), rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  labs(title = "2014 - 2023", x = "Hour of day", y = "Relative deviation (%)") 
+  #facet_wrap(vars(year(open_time)), ncol = 5) +
+  
+```
+
+Then I did the same for the weekdays and used the 7-day rolling mean to calculate the relative deviations. Here, I also removed outliers with  values outside the -10% to + 10% range (718 data points, 0.82% of the data).
+
+```{r Figure-5, fig.cap="**Figure 5: Deviations from 7-day rolling mean**. Hourly deviations from rolling mean with window size 7 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.1,
+    rel_diff > -0.1,
+    length == 7) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(wday(time, label = TRUE), rel_diff * 100), alpha = 0.3, color = "gray70", stroke = 0, position = position_jitter(width = 0.3)) +
+  geom_hpline(aes(wday(time, label = TRUE), rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(wday(time, label = TRUE), rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  labs(title = "2014 - 2023", x = "Day of week", y = "Relative deviation (%)") 
+  #facet_wrap(vars(year(open_time)), ncol = 5) +
+  
+```
+
+Here we can see a slight tendency for e.g Friday to be lower than average but the spread is very large. I wanted to see if this pattern was consistent over time, and looked at each year separately:
+
+```{r Figure-6, fig.cap="**Figure 6: Deviations from 7-day rolling mean shown per year**. Hourly deviations from rolling mean with window size 7 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.1,
+    rel_diff > -0.1,
+    length == 7) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(wday(time, label = TRUE), rel_diff * 100), alpha = 0.3, color = "gray70", stroke = 0, position = position_jitter(width = 0.3)) +
+  geom_hpline(aes(wday(time, label = TRUE), rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(wday(time, label = TRUE), rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  labs(title = "", x = "Day of week", y = "Relative deviation (%)") +
+  facet_wrap(vars(year(time)), ncol = 5) +
+  theme(
+    axis.text.x = element_text(angle = 90)
+  )
+  
+```
+
+There's quite a bit of variation from year to year. For five years out of the ten, Fridays are lower, but the spread is very large and the mean differences are very small. So no strong tendency. 
+
+I then wanted to see if I could find a pattern if I combined time of day with day of week, using deviations from the 7-day rolling mean: 
+
+```{r, Figure-7, fig.asp = 0.7, fig.cap="**Figure 7: Deviations from 7-day rolling mean shown per year**. Average hourly deviations from rolling mean with window size 7 days."}
+
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.1,
+    rel_diff > -0.1,
+    length == 7) %>% 
+  group_by(year = year(time), wday = wday(time, label = TRUE), hour = hour(time)) %>% 
+  summarize(mean_rel_diff = mean(rel_diff, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_raster(aes(wday, hour, fill = mean_rel_diff * 100)) +
+  scale_fill_gradient2(name = "Relative difference (%)", high = "#d01c8b", low = "#4dac26") +
+  labs(x = "Day of week", y = "Hour of day") +
+  facet_wrap(vars(year), ncol = 5) +
+  theme(
+    legend.key.height = unit(0.2, "cm"),
+    legend.position = "top",
+    axis.text.x = element_text(angle = 90),
+  )
+```
+
+Lastly, I wanted to see if time of month had an impact. Here, I removed outliers with  values outside the -20% to + 20% range (592 data points, 0.68% of the data).
+
+```{r Figure-8, fig.cap="**Figure 8: Deviations from 30-day rolling mean**. Hourly deviations from rolling mean with window size 30 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.2,
+    rel_diff > -0.2,
+    length == 30) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(day(time), rel_diff * 100), alpha = 0.5, color = "gray70", stroke = 0, position = position_jitter(width = 0.2)) +
+  geom_hpline(aes(day(time), rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(day(time), rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  labs(title = "2014 - 2023", x = "Day of Month", y = "Relative deviation (%)") 
+  #facet_wrap(vars(year(open_time)), ncol = 5) +
+```
+
+We see a tendency for lower prices towards the end of a month, and higher prices in the first third of the month. Again, I looked at this per year to see if this tendency is consistent:
+
+
+```{r Figure-9, fig.cap="**Figure 9: Deviations from 30-day rolling mean shown per year**. Hourly deviations from rolling mean with window size 30 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+btc_index_deviations %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.2,
+    rel_diff > -0.2,
+    length == 30) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(day(time), rel_diff * 100), alpha = 0.3, color = "gray70", stroke = 0, position = position_jitter(width = 0.1)) +
+  geom_hpline(aes(day(time), rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(day(time), rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  labs(title = "", x = "Day of Month", y = "Relative deviation (%)") +
+  facet_wrap(vars(year(time)), ncol = 5) 
+```
+
+There's a bit of variation from year to year. I tried to look at parts of the month instead: beginning, middle and end. 
+
+```{r Figure-10, fig.cap="**Figure 10: Deviations from 30-day rolling mean shown per year**. Hourly deviations from rolling mean with window size 30 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
+btc_index_deviations %>% 
+mutate(
+  month_part = case_when(
+    day(time) < 11 ~ "Beginning",
+    day(time) %in% c(11:20) ~ "Middle",
+    day(time) > 20 ~ "End"
+  )
+) %>% 
+  filter(
+    year(time) > 2013,
+    year(time) < 2024,
+    rel_diff < 0.2,
+    rel_diff > -0.2,
+    length == 30) %>% 
+  ggplot() +
+  geom_hline(yintercept = 0, color = "red") +
+  geom_point(aes(month_part, rel_diff * 100), alpha = 0.5, color = "gray70", stroke = 0, position = position_jitter(width = 0.3)) +
+  geom_hpline(aes(month_part, rel_diff * 100), stat="summary", fun="mean") +
+  stat_summary(aes(month_part, rel_diff * 100),
+               fun = mean,
+               geom = "linerange",
+               fun.max = function(x) mean(x) + sd(x),
+               fun.min = function(x) mean(x) - sd(x)) +
+  scale_x_discrete(limits=c("Beginning","Middle","End")) +
+  labs(title = "", x = "Part of Month", y = "Relative deviation (%)") +
+  facet_wrap(vars(year(time)), ncol = 5) +
+   theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+  )
+```
+
