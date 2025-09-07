@@ -95,7 +95,6 @@ btc_index_deviations %>% filter(year(time) > 2011) %>% arrange(time)
 ```
 
 
-
 ## Results
 
 ### Overview of the time series
@@ -133,7 +132,7 @@ p1 / p2 / p3 + plot_layout(axis_titles = "collect") & theme(legend.position = "n
 
 I calculated the rolling means as described above. They look like this:
 
-```{r Figure-2, fig.asp=0.5, layout="l-screen", fig.cap = "**Figure 2: BTC rate and rolling means.** Hourly prices and rolling means with window sizes of 1, 7, and 30 days, respectively. For illustration, only a few months of 2025 is shown. "}
+```{r Figure-2, fig.asp=0.5, layout="l-screen", fig.cap = "**Figure 2: BTC rate and rolling means.** Hourly prices and rolling means with window sizes of 1, 7, and 30 days, respectively. For illustration, only a few months of 2025 is shown."}
 btc_index_deviations %>% 
   filter(
     year(time) == 2025,
@@ -154,6 +153,8 @@ btc_index_deviations %>%
   )
 ```
 
+&nbsp;
+
 Then I calculated the relative deviation from those rolling means, and used them for the rest of the analyses. For all further analyses, I looked at the ten year period from 2014 to 2023. The deviations from the means look like this: 
 
 ```{r Figure-3, fig.asp=0.5, layout="l-screen", fig.cap = "**Figure 3: Deviations from rolling means**. Hourly deviations from rolling means with window sizes of 1, 7, and 30 days, respectively."}
@@ -170,6 +171,8 @@ btc_index_deviations %>%
   labs(title = "", x = "Time", y = "Relative deviation (%)") +
   facet_wrap(vars(length)) 
 ```
+
+&nbsp;
 
 First I wanted to see if there's any hour of the day where the BTC price tends to be higher or lower. So I used the relative deviation from the 24-hour rolling mean. I removed outliers, both to the make the plots easier to interpret and to prevent a few outliers from skewing the results. The data points I removed had values outside the -10% to + 10% range (35 data points, 0.04% of the data). As seen in the plot below, there's basically no pattern. 
 
@@ -195,6 +198,8 @@ btc_index_deviations %>%
   
 ```
 
+&nbsp;
+
 Then I did the same for the weekdays and used the 7-day rolling mean to calculate the relative deviations. Here, I also removed outliers with  values outside the -10% to + 10% range (718 data points, 0.82% of the data).
 
 ```{r Figure-5, fig.cap="**Figure 5: Deviations from 7-day rolling mean**. Hourly deviations from rolling mean with window size 7 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
@@ -219,6 +224,8 @@ btc_index_deviations %>%
   #facet_wrap(vars(year(open_time)), ncol = 5) +
   
 ```
+
+&nbsp;
 
 Here we can see a slight tendency for e.g Friday to be lower than average but the spread is very large. I wanted to see if this pattern was consistent over time, and looked at each year separately:
 
@@ -247,6 +254,8 @@ btc_index_deviations %>%
   
 ```
 
+&nbsp;
+
 There's quite a bit of variation from year to year. For five years out of the ten, Fridays are lower, but the spread is very large and the mean differences are very small. So no strong tendency. 
 
 I then wanted to see if I could find a pattern if I combined time of day with day of week, using deviations from the 7-day rolling mean: 
@@ -274,6 +283,8 @@ btc_index_deviations %>%
   )
 ```
 
+&nbsp;
+
 Lastly, I wanted to see if time of month had an impact. Here, I removed outliers with  values outside the -20% to + 20% range (592 data points, 0.68% of the data).
 
 ```{r Figure-8, fig.cap="**Figure 8: Deviations from 30-day rolling mean**. Hourly deviations from rolling mean with window size 30 days. The gray points indicate the deviation from the mean for each hour in the data set. The horizontal bars indicate the average deviation, and the vertical bars indicate the standard deviation."}
@@ -296,6 +307,8 @@ btc_index_deviations %>%
   labs(title = "2014 - 2023", x = "Day of Month", y = "Relative deviation (%)") 
   #facet_wrap(vars(year(open_time)), ncol = 5) +
 ```
+
+&nbsp;
 
 We see a tendency for lower prices towards the end of a month, and higher prices in the first third of the month. Again, I looked at this per year to see if this tendency is consistent:
 
@@ -320,6 +333,8 @@ btc_index_deviations %>%
   labs(title = "", x = "Day of Month", y = "Relative deviation (%)") +
   facet_wrap(vars(year(time)), ncol = 5) 
 ```
+
+&nbsp;
 
 There's a bit of variation from year to year. I tried to look at parts of the month instead: beginning, middle and end. 
 

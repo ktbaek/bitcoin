@@ -116,6 +116,8 @@ means.</strong> Hourly prices and rolling means with window sizes of 1,
 2025 is shown.</figcaption>
 </figure>
 
+ 
+
 Then I calculated the relative deviation from those rolling means, and
 used them for the rest of the analyses. For all further analyses, I
 looked at the ten year period from 2014 to 2023. The deviations from the
@@ -128,6 +130,8 @@ alt="Figure 3: Deviations from rolling means. Hourly deviations from rolling mea
 means</strong>. Hourly deviations from rolling means with window sizes
 of 1, 7, and 30 days, respectively.</figcaption>
 </figure>
+
+ 
 
 First I wanted to see if there’s any hour of the day where the BTC price
 tends to be higher or lower. So I used the relative deviation from the
@@ -148,6 +152,8 @@ deviation, and the vertical bars indicate the standard
 deviation.</figcaption>
 </figure>
 
+ 
+
 Then I did the same for the weekdays and used the 7-day rolling mean to
 calculate the relative deviations. Here, I also removed outliers with
 values outside the -10% to + 10% range (718 data points, 0.82% of the
@@ -164,6 +170,8 @@ deviation, and the vertical bars indicate the standard
 deviation.</figcaption>
 </figure>
 
+ 
+
 Here we can see a slight tendency for e.g Friday to be lower than
 average but the spread is very large. I wanted to see if this pattern
 was consistent over time, and looked at each year separately:
@@ -178,6 +186,8 @@ from the mean for each hour in the data set. The horizontal bars
 indicate the average deviation, and the vertical bars indicate the
 standard deviation.</figcaption>
 </figure>
+
+ 
 
 There’s quite a bit of variation from year to year. For five years out
 of the ten, Fridays are lower, but the spread is very large and the mean
@@ -194,6 +204,8 @@ rolling mean shown per year</strong>. Average hourly deviations from
 rolling mean with window size 7 days.</figcaption>
 </figure>
 
+ 
+
 Lastly, I wanted to see if time of month had an impact. Here, I removed
 outliers with values outside the -20% to + 20% range (592 data points,
 0.68% of the data).
@@ -209,6 +221,8 @@ deviation, and the vertical bars indicate the standard
 deviation.</figcaption>
 </figure>
 
+ 
+
 We see a tendency for lower prices towards the end of a month, and
 higher prices in the first third of the month. Again, I looked at this
 per year to see if this tendency is consistent:
@@ -223,6 +237,8 @@ from the mean for each hour in the data set. The horizontal bars
 indicate the average deviation, and the vertical bars indicate the
 standard deviation.</figcaption>
 </figure>
+
+ 
 
 There’s a bit of variation from year to year. I tried to look at parts
 of the month instead: beginning, middle and end.
