@@ -74,7 +74,7 @@ prettify_result_table <- function(df) {
     Period = period,
     `Factor (day of week, day of month at 00:00 UTC)` = factor,
     `η²` = format(round(eta2, 3), scientific = FALSE, drop0trailing = TRUE),
-    `p-value` = ifelse(p_value < 0.01, "<0.01", format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE)),
+    `p-value` = ifelse(p_value < 0.01, "&lt;0.01", format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE)),
     `Max mean diff (pp)` = round(max_diff_pp, 2),
     `Highest level` = highest_level,
     `Highest mean (pp)` = round(highest_mean_pp, 2),

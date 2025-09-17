@@ -212,17 +212,344 @@ replicate in 2022–2023 (large *p*, low
 indicating that any apparent month-end dip is regime-dependent rather
 than a durable pattern.
 
-| Period    | Factor (day of week, day of month at 00:00 UTC) | η²    | p-value | Max mean diff (pp) | Highest level | Highest mean (pp) | Lowest level | Lowest mean (pp) | N (obs) | k (levels) |
-|:----------|:------------------------------------------------|:------|:--------|-------------------:|:--------------|------------------:|:-------------|-----------------:|--------:|-----------:|
-| 2014-2023 | Hour of day                                     | 0.001 | \<0.01  |               0.11 | 22            |              0.06 | 10           |            -0.05 |   87648 |         24 |
-| 2014-2023 | Day of week                                     | 0.002 | 0.42    |               0.38 | Thu           |              0.16 | Fri          |            -0.23 |    3652 |          7 |
-| 2014-2023 | Day of month                                    | 0.019 | \<0.01  |               2.94 | 8             |              1.44 | 25           |            -1.50 |    3652 |         31 |
-| 2019-2023 | Hour of day                                     | 0.001 | \<0.01  |               0.12 | 22            |              0.07 | 11           |            -0.04 |   43824 |         24 |
-| 2019-2023 | Day of week                                     | 0.005 | 0.18    |               0.65 | Thu           |              0.42 | Fri          |            -0.24 |    1826 |          7 |
-| 2019-2023 | Day of month                                    | 0.027 | 0.012   |               3.31 | 8             |              1.61 | 25           |            -1.70 |    1826 |         31 |
-| 2022-2023 | Hour of day                                     | 0.001 | 0.99    |               0.07 | 22            |              0.03 | 19           |            -0.04 |   17520 |         24 |
-| 2022-2023 | Day of week                                     | 0.012 | 0.17    |               0.71 | Thu           |              0.46 | Mon          |            -0.24 |     730 |          7 |
-| 2022-2023 | Day of month                                    | 0.041 | 0.48    |               3.48 | 5             |              1.83 | 12           |            -1.65 |     730 |         31 |
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Period
+</th>
+<th style="text-align:left;">
+Factor (day of week, day of month at 00:00 UTC)
+</th>
+<th style="text-align:left;">
+η²
+</th>
+<th style="text-align:left;">
+p-value
+</th>
+<th style="text-align:right;">
+Max mean diff (pp)
+</th>
+<th style="text-align:left;">
+Highest level
+</th>
+<th style="text-align:right;">
+Highest mean (pp)
+</th>
+<th style="text-align:left;">
+Lowest level
+</th>
+<th style="text-align:right;">
+Lowest mean (pp)
+</th>
+<th style="text-align:right;">
+N (obs)
+</th>
+<th style="text-align:right;">
+k (levels)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: middle !important;" rowspan="3">
+2014-2023
+</td>
+<td style="text-align:left;">
+Hour of day
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:left;">
+&lt;0.01
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:right;">
+-0.05
+</td>
+<td style="text-align:right;">
+87648
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of week
+</td>
+<td style="text-align:left;">
+0.002
+</td>
+<td style="text-align:left;">
+0.42
+</td>
+<td style="text-align:right;">
+0.38
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:left;">
+Fri
+</td>
+<td style="text-align:right;">
+-0.23
+</td>
+<td style="text-align:right;">
+3652
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of month
+</td>
+<td style="text-align:left;">
+0.019
+</td>
+<td style="text-align:left;">
+&lt;0.01
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:right;">
+1.44
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:right;">
+-1.50
+</td>
+<td style="text-align:right;">
+3652
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: middle !important;" rowspan="3">
+2019-2023
+</td>
+<td style="text-align:left;">
+Hour of day
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:left;">
+&lt;0.01
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:right;">
+-0.04
+</td>
+<td style="text-align:right;">
+43824
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of week
+</td>
+<td style="text-align:left;">
+0.005
+</td>
+<td style="text-align:left;">
+0.18
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:left;">
+Fri
+</td>
+<td style="text-align:right;">
+-0.24
+</td>
+<td style="text-align:right;">
+1826
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of month
+</td>
+<td style="text-align:left;">
+0.027
+</td>
+<td style="text-align:left;">
+0.012
+</td>
+<td style="text-align:right;">
+3.31
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:right;">
+1.61
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:right;">
+-1.70
+</td>
+<td style="text-align:right;">
+1826
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: middle !important;" rowspan="3">
+2022-2023
+</td>
+<td style="text-align:left;">
+Hour of day
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:left;">
+0.99
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:right;">
+-0.04
+</td>
+<td style="text-align:right;">
+17520
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of week
+</td>
+<td style="text-align:left;">
+0.012
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+<td style="text-align:left;">
+Mon
+</td>
+<td style="text-align:right;">
+-0.24
+</td>
+<td style="text-align:right;">
+730
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day of month
+</td>
+<td style="text-align:left;">
+0.041
+</td>
+<td style="text-align:left;">
+0.48
+</td>
+<td style="text-align:right;">
+3.48
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:right;">
+1.83
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:right;">
+-1.65
+</td>
+<td style="text-align:right;">
+730
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+</tbody>
+</table>
 
 # Conclusion
 
