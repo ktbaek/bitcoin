@@ -6,7 +6,7 @@ theme_pub <- function (base_size = 11, base_family = "Helvetica")
     
     line = element_line(
       colour = "black", 
-      size = 0.5, 
+      linewidth = 0.5, 
       linetype = 1, 
       lineend = "butt"
     ), 
@@ -14,7 +14,7 @@ theme_pub <- function (base_size = 11, base_family = "Helvetica")
     rect = element_rect(
       fill = "white", 
       colour = "black", 
-      size = 0.5, 
+      linewidth = 0.5, 
       linetype = 1
     ), 
     
