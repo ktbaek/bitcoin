@@ -200,7 +200,7 @@ circle) and the 95% CI intervals (vertical bars) are
 indicated.</figcaption>
 </figure>
 
-# Shorter time periods
+## Shorter time periods
 
 To test stability, I recomputed the hour/weekday/month summaries over
 2014–2023, 2019–2023, and 2022–2023. Each window repeats the same
@@ -212,17 +212,17 @@ replicate in 2022–2023 (large *p*, low
 indicating that any apparent month-end dip is regime-dependent rather
 than a durable pattern.
 
-| Period    | Factor                   | η²      | p-value  | Max mean diff (pp) | Highest level | Highest mean (pp) | Lowest level | Lowest mean (pp) | N (obs) | k (levels) |
-|:----------|:-------------------------|:--------|:---------|-------------------:|:--------------|------------------:|:-------------|-----------------:|--------:|-----------:|
-| 2014-2023 | Hour of day              | 0.00068 | 0.000044 |              0.107 | 22            |             0.059 | 10           |           -0.048 |   87648 |         24 |
-| 2014-2023 | Day of week (00:00 UTC)  | 0.0017  | 0.42     |              0.383 | Thu           |             0.158 | Fri          |           -0.225 |    3652 |          7 |
-| 2014-2023 | Day of month (00:00 UTC) | 0.019   | 0.000031 |              2.936 | 8             |             1.438 | 25           |           -1.498 |    3652 |         31 |
-| 2019-2023 | Hour of day              | 0.0012  | 0.00061  |              0.117 | 22            |             0.073 | 11           |           -0.044 |   43824 |         24 |
-| 2019-2023 | Day of week (00:00 UTC)  | 0.0049  | 0.18     |              0.653 | Thu           |             0.416 | Fri          |           -0.237 |    1826 |          7 |
-| 2019-2023 | Day of month (00:00 UTC) | 0.027   | 0.012    |              3.306 | 8             |             1.605 | 25           |           -1.701 |    1826 |         31 |
-| 2022-2023 | Hour of day              | 0.00057 | 0.99     |              0.071 | 22            |             0.030 | 19           |           -0.041 |   17520 |         24 |
-| 2022-2023 | Day of week (00:00 UTC)  | 0.012   | 0.17     |              0.707 | Thu           |             0.464 | Mon          |           -0.244 |     730 |          7 |
-| 2022-2023 | Day of month (00:00 UTC) | 0.041   | 0.48     |              3.484 | 5             |             1.834 | 12           |           -1.650 |     730 |         31 |
+| Period    | Factor                   | η²    | p-value | Max mean diff (pp) | Highest level | Highest mean (pp) | Lowest level | Lowest mean (pp) | N (obs) | k (levels) |
+|:----------|:-------------------------|:------|:--------|-------------------:|:--------------|------------------:|:-------------|-----------------:|--------:|-----------:|
+| 2014-2023 | Hour of day              | 0.001 | \<0.01  |               0.11 | 22            |              0.06 | 10           |            -0.05 |   87648 |         24 |
+| 2014-2023 | Day of week (00:00 UTC)  | 0.002 | 0.42    |               0.38 | Thu           |              0.16 | Fri          |            -0.23 |    3652 |          7 |
+| 2014-2023 | Day of month (00:00 UTC) | 0.019 | \<0.01  |               2.94 | 8             |              1.44 | 25           |            -1.50 |    3652 |         31 |
+| 2019-2023 | Hour of day              | 0.001 | \<0.01  |               0.12 | 22            |              0.07 | 11           |            -0.04 |   43824 |         24 |
+| 2019-2023 | Day of week (00:00 UTC)  | 0.005 | 0.18    |               0.65 | Thu           |              0.42 | Fri          |            -0.24 |    1826 |          7 |
+| 2019-2023 | Day of month (00:00 UTC) | 0.027 | 0.012   |               3.31 | 8             |              1.61 | 25           |            -1.70 |    1826 |         31 |
+| 2022-2023 | Hour of day              | 0.001 | 0.99    |               0.07 | 22            |              0.03 | 19           |            -0.04 |   17520 |         24 |
+| 2022-2023 | Day of week (00:00 UTC)  | 0.012 | 0.17    |               0.71 | Thu           |              0.46 | Mon          |            -0.24 |     730 |          7 |
+| 2022-2023 | Day of month (00:00 UTC) | 0.041 | 0.48    |               3.48 | 5             |              1.83 | 12           |            -1.65 |     730 |         31 |
 
 # Conclusion
 

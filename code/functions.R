@@ -73,13 +73,13 @@ prettify_result_table <- function(df) {
   transmute(
     Period = period,
     Factor = factor,
-    `η²` = format(signif(eta2, 2), scientific = FALSE, drop0trailing = TRUE),
-    `p-value` = format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE),
-    `Max mean diff (pp)` = round(max_diff_pp, 3),
+    `η²` = format(round(eta2, 3), scientific = FALSE, drop0trailing = TRUE),
+    `p-value` = ifelse(p_value < 0.01, "<0.01", format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE)),
+    `Max mean diff (pp)` = round(max_diff_pp, 2),
     `Highest level` = highest_level,
-    `Highest mean (pp)` = round(highest_mean_pp, 3),
+    `Highest mean (pp)` = round(highest_mean_pp, 2),
     `Lowest level` = lowest_level,
-    `Lowest mean (pp)` = round(lowest_mean_pp, 3),
+    `Lowest mean (pp)` = round(lowest_mean_pp, 2),
     `N (obs)` = N,
     `k (levels)` = k_levels
   ) %>% 

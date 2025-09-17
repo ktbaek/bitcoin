@@ -436,11 +436,11 @@ btc_index_deviations %>% filter(
   )
 ```
 
-# Shorter time periods
+## Shorter time periods
 
 To test stability, I recomputed the hour/weekday/month summaries over 2014–2023, 2019–2023, and 2022–2023. Each window repeats the same methodology. The results shown in the table below emphasize the earlier conclusions. Hour and weekday remain negligible in every window. The day-of-month effect that is weakly present over 2014–2023 does not replicate in 2022–2023 (large *p*, low $\eta^{2}$), indicating that any apparent month-end dip is regime-dependent rather than a durable pattern.
 
-```{r}
+```{r summary_all function}
 summarize_all <- function(df, group) {
   
   df2 <- df %>%
@@ -467,7 +467,7 @@ summarize_all <- function(df, group) {
 }
 ```
 
-```{r}
+```{r summarize all per factor}
 df_hour <- btc_index_deviations %>% 
   filter(length == 1) %>%
   mutate(hour = lubridate::hour(time)) %>% 
@@ -484,7 +484,7 @@ df_dom <- btc_index_deviations %>%
   summarize_all(group = dom)
 ```
 
-```{r}
+```{r summarize all table}
 bind_rows(
   df_hour %>% mutate(factor = "Hour of day"), 
   df_wday %>% mutate(factor = "Day of week (00:00 UTC)"),
