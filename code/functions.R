@@ -72,7 +72,7 @@ prettify_result_table <- function(df) {
  df %>%
   transmute(
     Period = period,
-    Factor = factor,
+    `Factor (day of week, day of month at 00:00 UTC)` = factor,
     `η²` = format(round(eta2, 3), scientific = FALSE, drop0trailing = TRUE),
     `p-value` = ifelse(p_value < 0.01, "<0.01", format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE)),
     `Max mean diff (pp)` = round(max_diff_pp, 2),
@@ -83,11 +83,7 @@ prettify_result_table <- function(df) {
     `N (obs)` = N,
     `k (levels)` = k_levels
   ) %>% 
-    kable() #%>%
- #   tab_header(
-  #    title = md("**Calendar effects on BTC deviations**"),
- #     subtitle = "η² indicates consistency; max mean diff indicates economic magnitude (percentage points)."
-  #  ) %>% 
-  #  opt_align_table_header(align = "left")
+    kable()
+ 
   
 }

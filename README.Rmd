@@ -5,6 +5,7 @@ date: "2025-09-17"
 output:
   rmarkdown::github_document:
     math_method: "webtex"
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +25,7 @@ library(zoo)
 library(effectsize)
 library(tidymodels)
 library(knitr)
-library(gt)
+library(kableExtra)
 ```
 
 ```{r style, include=FALSE}
@@ -474,8 +475,8 @@ df_dom <- btc_index_deviations %>%
 ```{r summarize all table}
 bind_rows(
   df_hour %>% mutate(factor = "Hour of day"), 
-  df_wday %>% mutate(factor = "Day of week (00:00 UTC)"),
-  df_dom %>% mutate(factor = "Day of month (00:00 UTC)")) %>% 
+  df_wday %>% mutate(factor = "Day of week"),
+  df_dom %>% mutate(factor = "Day of month")) %>% 
   select(-data) %>% 
   mutate(period = case_when(period == "period_10" ~ "2014-2023",
                             period == "period_5" ~ "2019-2023",
