@@ -1,4 +1,4 @@
-Exploration of Bitcoin price patterns
+Testing Calendar Effects in Bitcoin Prices (2014–2023)
 ================
 Kristoffer T. Bæk
 2025-09-17
