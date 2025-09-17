@@ -73,7 +73,7 @@ prettify_result_table <- function(df) {
   transmute(
     Period = period,
     Factor = factor,
-    `η² (variance explained)` = format(signif(eta2, 2), scientific = FALSE, drop0trailing = TRUE),
+    `η²` = format(signif(eta2, 2), scientific = FALSE, drop0trailing = TRUE),
     `p-value` = format(signif(p_value, 2), scientific=FALSE, drop0trailing = TRUE),
     `Max mean diff (pp)` = round(max_diff_pp, 3),
     `Highest level` = highest_level,
@@ -83,11 +83,11 @@ prettify_result_table <- function(df) {
     `N (obs)` = N,
     `k (levels)` = k_levels
   ) %>% 
-    gt() %>%
-    tab_header(
-      title = md("**Calendar effects on BTC deviations**"),
-      subtitle = "η² indicates consistency; max mean diff indicates economic magnitude (percentage points)."
-    ) %>% 
-    opt_align_table_header(align = "left")
+    kable() #%>%
+ #   tab_header(
+  #    title = md("**Calendar effects on BTC deviations**"),
+ #     subtitle = "η² indicates consistency; max mean diff indicates economic magnitude (percentage points)."
+  #  ) %>% 
+  #  opt_align_table_header(align = "left")
   
 }
