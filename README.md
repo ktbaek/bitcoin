@@ -233,5 +233,5 @@ and economic size (highest–lowest mean differences that matter after
 noise and costs). Over 2014–2023, calendar effects in Bitcoin price
 deviations are either negligible (hour, weekday) or small and unstable
 (day of month). In recent years (2022–2023) they largely disappear. For
-recurring purchases, this evidence favors any simple DCA over DCA timed
-by calendar rules.
+recurring purchases, this evidence does not favor DCA timed by calendar
+rules.
