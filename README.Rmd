@@ -1,5 +1,5 @@
 ---
-title: "Exploration of Bitcoin price patterns"
+title: "Testing Calendar Effects in Bitcoin Prices (2014–2023)"
 author: "Kristoffer T. Bæk"
 date: "2025-09-17"
 output:
