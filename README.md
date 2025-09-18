@@ -82,14 +82,12 @@ statistical detectability.
 
 # Results
 
-To detect any repeating daily, weekly or monthly patterns in the BTC
-price index, I calculated three different rolling means with varying
-window-sizes (24 hours, 7 days and 30 days, **Figure 1**), and analyzed
-how much the hourly price deviates from the mean by calculating the
-relative deviation. For the first part of the analysis, I looked at the
-ten year period from 2014 to 2023. The idea was to use the data from
-2024-2025 as a hold-out to test any predictions that might result from
-the 2014-2023 analyses.
+Three different rolling means with varying window-sizes (24 hours, 7
+days and 30 days, **Figure 1**) were used to analyze relative
+deviations. For the first part of the analysis, I looked at the ten year
+period from 2014 to 2023. The idea was to use the data from 2024-2025 as
+a hold-out to test any predictions that might result from the 2014-2023
+analyses.
 
 <figure>
 <img src="README_files/figure-gfm/Figure-1-1.png"

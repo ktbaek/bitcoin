@@ -132,7 +132,7 @@ For each calendar factor I fit a one-way ANOVA of relative deviation on the fact
 
 # Results
 
-To detect any repeating daily, weekly or monthly patterns in the BTC price index, I calculated three different rolling means with varying window-sizes (24 hours, 7 days and 30 days, **Figure 1**), and analyzed how much the hourly price deviates from the mean by calculating the relative deviation. For the first part of the analysis, I looked at the ten year period from `r first_year` to `r last_year`. The idea was to use the data from 2024-2025 as a hold-out to test any predictions that might result from the `r first_year`-`r last_year` analyses. 
+Three different rolling means with varying window-sizes (24 hours, 7 days and 30 days, **Figure 1**) were used to analyze relative deviations. For the first part of the analysis, I looked at the ten year period from `r first_year` to `r last_year`. The idea was to use the data from 2024-2025 as a hold-out to test any predictions that might result from the `r first_year`-`r last_year` analyses. 
 
 ```{r label-names}
 rolling_mean_names <- c(
