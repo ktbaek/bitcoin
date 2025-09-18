@@ -103,7 +103,7 @@ is shown.</figcaption>
 First, I wanted to see if certain hours of day consistently offer
 cheaper prices. Using the 24-hour rolling mean, I compared deviations by
 hour (**Figure 2**). We can see that means with 95% confidence intervals
-overlap heavily across all hours. ANOVA detected tiny but statistically
+overlap heavily across most hours. ANOVA detected tiny but statistically
 significant differences (*p* = 0.000044), but the effect size was
 negligible
 (![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")

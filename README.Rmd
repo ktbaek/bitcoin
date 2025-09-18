@@ -192,7 +192,7 @@ p_value <- stats_hour %>%
 
 ```
 
-First, I wanted to see if certain hours of day consistently offer cheaper prices. Using the 24-hour rolling mean, I compared deviations by hour (**Figure 2**). We can see that means with 95% confidence intervals overlap heavily across all hours. ANOVA detected tiny but statistically significant differences (*p* = `r p_value`), but the effect size was negligible ($\eta^{2}$ = `r eta2`), meaning that hour of day explains less than `r eta2pct`% of the variance in deviations. In conclusion, hour of day has no meaningful effect on price deviations, and therefore no value for timing recurring buys.
+First, I wanted to see if certain hours of day consistently offer cheaper prices. Using the 24-hour rolling mean, I compared deviations by hour (**Figure 2**). We can see that means with 95% confidence intervals overlap heavily across most hours. ANOVA detected tiny but statistically significant differences (*p* = `r p_value`), but the effect size was negligible ($\eta^{2}$ = `r eta2`), meaning that hour of day explains less than `r eta2pct`% of the variance in deviations. In conclusion, hour of day has no meaningful effect on price deviations, and therefore no value for timing recurring buys.
 
 
 ```{r Figure-2, fig.asp = 0.5, fig.cap="**Figure 2: Mean relative deviation by hour of day (with 95% CI)**. The mean relative deviations (black circle) for each hour of the day and the 95% CI intervals (vertical bars) are indicated. Times in UTC."}
