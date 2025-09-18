@@ -89,7 +89,6 @@ n5 <- format(n5, big.mark = ",", scientific = FALSE)
 n2 <- format(n2, big.mark = ",", scientific = FALSE)
 ```
 
-
 I used the 'Close' price value for all analyses, and checked the time series for continuity. Only the first and last day contains less than 24 data points indicating that the time series is continuous. I created subsets of the dataset spanning the years 2014-2023, 2019-2023 and 2022-2023 containing `r n10`, `r n5` and `r n2` time points, respectively.
 
 ```{r check data, include=FALSE }
@@ -166,7 +165,6 @@ btc_index_deviations %>%
 
 ```
 
-
 ## Hour of day
 
 ```{r anova hod}
@@ -216,7 +214,7 @@ btc_index_deviations %>% filter(
  
 ```
 
-## Day of week pattern
+## Day of week
 
 ```{r anova weekday UTC 0}
 # One-way ANOVA: does deviation differ by weekday?
@@ -325,9 +323,7 @@ btc_index_deviations %>% filter(
 ```
 
 
-## Day of month pattern
-
-
+## Day of month
 
 ```{r anova dom UTC 0}
 # One-way ANOVA: does deviation differ by weekday?
@@ -484,7 +480,6 @@ bind_rows(
 ```
 
 \*) *Day of week and day of month are at 00:00 UTC*
-
 
 # Conclusion
 

@@ -123,7 +123,7 @@ by hour of day (with 95% CI)</strong>. The mean relative deviations
 (vertical bars) are indicated. Times in UTC.</figcaption>
 </figure>
 
-## Day of week pattern
+## Day of week
 
 Then I did the same analysis for weekdays but used the 7-day rolling
 mean to calculate the relative deviations. We can see a large overlap
@@ -162,7 +162,7 @@ relative deviations for each day of the week at 00:00 UTC (black circle)
 and the 95% CI intervals (vertical bars) are indicated.</figcaption>
 </figure>
 
-## Day of month pattern
+## Day of month
 
 Lastly, I tested whether time of month had an impact using deviations
 from the 30-day rolling mean. Plotting means with 95% CIs shows some
