@@ -24,7 +24,7 @@ the price
 (![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
 = 0.02) with slightly lower prices near the end of the month, but this
 pattern was not consistent across years. Finally, I checked whether any
-signals persisted in more recent sub-periods. In conclusion, across a
+signals persisted in more recent sub-periods. I conclude that, across a
 decade of data, calendar timing offered no obvious edge for DCA.
 
 # Methods
@@ -560,5 +560,5 @@ and economic size (highest–lowest mean differences that matter after
 noise and costs). Over 2014–2023, calendar effects in Bitcoin price
 deviations are either negligible (hour, weekday) or small and unstable
 (day of month). In recent years (2022–2023) they largely disappear. For
-recurring purchases, this evidence does not favor DCA timed by calendar
+recurring purchases, this analysis does not favor DCA timed by calendar
 rules.
