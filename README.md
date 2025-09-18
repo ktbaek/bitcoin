@@ -200,7 +200,7 @@ circle) and the 95% CI intervals (vertical bars) are
 indicated.</figcaption>
 </figure>
 
-## Shorter time periods
+## More recent time periods
 
 To test stability, I recomputed the hour/weekday/month summaries over
 2014–2023, 2019–2023, and 2022–2023. Each window repeats the same
@@ -219,7 +219,7 @@ than a durable pattern.
 Period
 </th>
 <th style="text-align:left;">
-Factor (day of week, day of month at 00:00 UTC)
+Factor&ast;
 </th>
 <th style="text-align:left;">
 η²
@@ -550,6 +550,8 @@ Day of month
 </tr>
 </tbody>
 </table>
+
+\*) *Day of week and day of month are at 00:00 UTC*
 
 # Conclusion
 
