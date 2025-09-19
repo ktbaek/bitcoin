@@ -135,8 +135,8 @@ would be detected if I used another time of day, I calculated the
 (![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}"))
 for each hour of the day. I found that if I use hour 13:00 UTC, the
 *p*-value falls below the 0.05 threshold with an effect size of
-(![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
-= 0.0035) meaning that the day of week explains 0.4% of the variance in
+![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
+= 0.0035 meaning that the day of week explains 0.4% of the variance in
 deviations. However, this is a single marginal signal among 24 parallel
 tests, and the apparent weekday pattern varies heavily across years
 (**Figure 4**). Taken together, this indicates that weekday effects are
@@ -168,8 +168,8 @@ separation across days (**Figure 5**). As before, I performed a one-way
 ANOVA test and calculated the effect size. At 00:00 UTC, ANOVA detected
 a statistically significant difference (*p* = 0.000031) with an effect
 size of
-(![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
-= 0.019), meaning day of month explains 1.9% of the variance. Repeating
+![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
+= 0.019, meaning day of month explains 1.9% of the variance. Repeating
 the test across all hours of the day again yielded statistically
 significant results (*p* \< 0.05), with effect sizes ranging from
 ![\eta^{2}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Ceta%5E%7B2%7D "\eta^{2}")
